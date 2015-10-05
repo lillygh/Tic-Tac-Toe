@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="utf-8">
+	<title>Tic Tac Toe 2.0</title>
+</head>
+
+<body onload="startGame();">
+	<h1>Tic Tac Toe 2.0!</h1>		
+	<div id="message"></div>
+	
+	<div class="myBox" id="box1" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box2" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box3" onclick="nextMove(this);">
+	</div>
+	<br>
+	<div class="myBox" id="box4" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box5" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box6" onclick="nextMove(this);">
+	</div>
+	<br>
+	<div class="myBox" id="box7" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box8" onclick="nextMove(this);">
+	</div>
+	<div class="myBox" id="box9" onclick="nextMove(this);">
+	</div>
+	<br>
+	<a href="javascript:startGame();">Start Over</a>
+
+
+	<script type="text/javascript">
+		
+		function startGame() {
+			for (var i = 1; i <= 9; i++) {
+				clearBoard(i);
+			}
+
+			document.turn = "X";
+			if (Math.random() < 0.5) {
+				document.turn = "O";
+			}
+			document.winner = null;
+			setMessage(document.turn + " gets to start.");
+		}
+		
+		function setMessage(msg) {
+			document.getElementById("message").innerText = msg;
+		}
+		
+		function nextMove(myBox) {
+			if (document.winner !== null) {
+				setMessage(document.winner + " already won.");
+			} else if (myBox.innerText == "") {
+				myBox.innerText = document.turn;
+				switchTurn();
+			} else {
+				setMessage("That box is already used.");
+			}
+		}
+		
+		function switchTurn() {
+		
+			if (checkForWinner(document.turn)) {
+				setMessage("Congratulations, " + document.turn + "!  You win!");
+				document.winner = document.turn;
+			} else if (document.turn == "X") {
+				document.turn = "O";
+				setMessage("It's " + document.turn + "'s turn!");
+			} else {
+				document.turn = "X";
+				setMessage("It's " + document.turn + "'s turn!");
+			}
+		}
+		
+		function checkForWinner(move) {
+			var result = false;
+			if (checkRow(1, 2, 3, move) || 
+				checkRow(4, 5, 6, move) ||
+				checkRow(7, 8, 9, move) || 
+				checkRow(1, 4, 7, move) ||
+				checkRow(2, 5, 8, move) ||
+				checkRow(3, 6, 9, move) ||
+				checkRow(1, 5, 9, move) ||
+				checkRow(3, 5, 7, move)) {
+				
+				result = true;
+			}
+			return result;
+		}
+		
+		function checkRow(a, b, c, move) {
+			var result = false;
+			if (getBox(a) == move && getBox(b) == move && getBox(c) == move) {
+				result = true;
+			}
+			return result;
+		}
+		
+		function getBox(number) {
+			return document.getElementById("box" + number).innerText;
+		}
+
+		function clearBoard(number) {
+			document.getElementById("box" + number).innerText = "";
+		}
+
+
+		/*var myFirstBox = document.querySelector('.my-box');
+		myFirstBox.addEventListener('click', function() {
+			console.log('you are clicking me');
+		})*/
+		// var boxes = document.querySelectorAll('.my-box'); ***
+		// console.log(boxes);
+		//prints a single box:
+		//var boxes = document.querySelectorAll('.my-box');
+			//console.log(boxes[4]);
+		// OR
+		/*boxes[4].addEventListener('click',function() {
+			console.log("i am the center");
+		});*/
+
+		// for (var i=0; i<boxes.length; i++) {
+		// 	boxes[i].addEventListener('click',function() {});
+		// }***
+
+		// var imageX = document.getElementById(redX);
+		// // console.log(imageX);
+		// var imageO = document.getElementById('redO');
+		// console.log(imageO);
+		// queryselector retrieves first element, go into tictactoe:html:34 in console
+
+	</script>
+
+
+
+</body>
+</html>
